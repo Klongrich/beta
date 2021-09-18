@@ -2,7 +2,9 @@ import React, {useEffect, useState} from "react";
 import Web3 from "web3";
 
 import styled from "styled-components";
-import { NFTStorage} from "nft.storage";
+import { NFTStorage, Token} from "nft.storage";
+
+import { ERC721_ABI } from "./abi/ERC721-ABI";
 
 //Should move api to .env for production. I'm just lazy ....
 const client = new NFTStorage({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGQwOTAzNzkxMTE2Mzc4QzFhMzQzQWNEOTlkODM5QTVjOUNEMTkwZDYiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTYyMjM0MzExMzE0NCwibmFtZSI6Ik1ldGFDYXJkcyJ9.nxK3qwZzikTkvwRqyHAVTPn4ycHW40xFatYM6S2vOZk" });
@@ -46,7 +48,27 @@ function App() {
     }
   }
 
-  async function submit_data(){
+  async function mint_new_token(tokenURI) {
+    const web3 = window.web3;
+    const Ethaccounts = await web3.eth.getAccounts();
+
+    const Contract = new web3.eth.Contract(ERC721_ABI, "0x07caD193c8f3d897Cb1e6dA68CFb3108c66D4466");
+
+    const TokenID = 42;
+
+    console.log("Account One: " + Ethaccounts[0]);
+    console.log("TokenID: " + TokenID);
+    console.log("TokenURI: " + tokenURI);
+
+    await Contract.methods.mint(Ethaccounts[0], TokenID, tokenURI)
+                          .send({from: Ethaccounts[0], value: 42})
+                          .once("receipt", (res) => {
+                              console.log(res);
+                          })
+
+  }
+
+  async function submit_data_to_ipfs(){
     const metadata = await client.store({
       name: metaName,
       description: metaDiscrtiption,
@@ -63,6 +85,7 @@ function App() {
       ]
     })
     console.log(metadata.url);
+    mint_new_token(metadata.url);
   }
 
   useEffect(() => {
@@ -123,7 +146,7 @@ function App() {
             <h3> Discrtiption: <br /> {metaDiscrtiption} </h3>
           </PreviewContainer>
 
-          <button onClick={() => submit_data()}>
+          <button onClick={() => submit_data_to_ipfs()}>
                 Mint NFT ->
             </button>
           <br />
