@@ -46,6 +46,7 @@ function App() {
       //Janky hot fix for now ...
       const EthAccounts = await web3.eth.getAccounts();
       setUserAddress(EthAccounts[0]);
+      updateAddressSet(true);
 
       console.log("Set as Address: " + EthAccounts[0])
     } else {
