@@ -1,6 +1,11 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 
+import Button from "@material-ui/core/Button";
+
+import { ThemeProvider } from "@material-ui/core/styles";
+import { createTheme } from '@material-ui/core/styles';
+
 const ImageBox = styled.div`
     height: 350px;
     width: 300px;
@@ -29,6 +34,61 @@ const ImageBox = styled.div`
         transform: scale(1.03);
     }
 `
+
+const HeaderBox = styled.div`
+
+    ul {
+        list-style-type: none;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    li {
+        float: left;
+        padding-left: 24px;
+    }
+
+    background-color: grey;
+    height: 142px;
+
+    padding: 5px;
+    padding-left: 15px;
+
+    margin-bottom: 20px;
+`
+
+const AssesetFilter = styled.div`
+    height: 1000px;
+    width: 22%;
+
+    float: left;
+    background-color: #fcf7f7;
+
+    border-radius: 8px;
+    border: 1px solid black;
+
+    padding-left: 18px;
+
+    :hover {
+        box-shadow: 0 0 5px black;
+    }
+
+`
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#5a8f04"
+      },
+      secondary: {
+        main: "#751200",
+      },
+      primary1:{
+          main: "rgba(38, 33, 23, 0.62)"
+      }
+    },
+  });
+
 
 export const Filler = [
     {
@@ -77,12 +137,71 @@ export default function View_Assests({address}) {
 
     return (
         <>
+            <h1 Style="text-align: center;"> View User Assests </h1>
+            
+            {/* <HeaderBox>
             <h2> View Assests</h2>
+            <p Style="margin-left: 140px; margin-top: -40px;">- Created On - 12/12/2012</p>
             <ul>
-                <li> Date Joined - 12/12/2012 </li>
                 <li> Total NFT Value: $142,000 </li>
                 <li> Address Balance: 42.22 ETH </li>
             </ul>
+
+            <br />
+            <p>Sort By -> Collection, price, purchase date, etc ...</p>
+            </HeaderBox> */}
+
+            <AssesetFilter>
+                <h2 Style="text-align: center; font-size: 30px"> Assest Filter </h2>
+
+                <div>
+                <ThemeProvider theme={theme}>
+             
+                    <Button style={{minWidth: '142px'}} size="large" variant="contained" color="primary">  Recent  </Button>
+                    <br /> <br />
+                    <Button style={{minWidth: '142px'}} size="large" variant="contained" color="primary">  On Sale </Button>
+                    <br /> <br />
+            
+
+                    <div Style="text-align: right; margin-top: -120px; margin-right: 18px;">
+                        <Button style={{minWidth: '142px'}} size="large" variant="contained" color="primary">  On Auction </Button>
+                        <br /> <br />
+                        <Button style={{minWidth: '142px'}} size="large" variant="contained" color="primary">  Has Offers </Button>
+                    </div>
+                </ThemeProvider>
+                </div>
+                
+                <br />
+                <div Style="border-top: 1px solid black; 
+                            margin-right: 18px;
+                            padding-bottom: 20px;
+                            margin-top: 15px;">
+                    <h2> Collection </h2>
+                    <input />
+                    <br /> <br />
+                    <button>
+                        Search
+                    </button>
+                </div>
+                <br />
+                <div Style="border-top: 1px solid black;
+                            border-bottom: 1px solid black;
+                            padding-bottom: 30px; 
+                            margin-right: 18px;">
+                    <h2>Price: $USD</h2>
+                    
+                    <p>Min: </p>
+                    <input />
+                    
+                    <p>Max: </p>
+                    <input />
+                    <br /> <br />
+                    <button>
+                        Search
+                    </button>
+                </div>
+            </AssesetFilter>
+
             {userNFTs.map((data) => 
                 <>
                     <ImageBox>
