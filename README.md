@@ -11,6 +11,10 @@ yarn | npm install
 
 ### In the "submit_data_to_ipfs" function the "attributes" tab in the JSON is where you can select your own traits for open-sea.
 
+# viewing your nft assests
+
+View page will allow you to view meta and analytics on your current NFTs as allow you to list them for sell or purchase other ones. 
+
 
 
 
