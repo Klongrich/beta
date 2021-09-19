@@ -1,156 +1,81 @@
 import React, {useEffect, useState} from "react";
-import Web3 from "web3";
-
 import styled from "styled-components";
-import { NFTStorage, Token} from "nft.storage";
 
-import { ERC721_ABI } from "./abi/ERC721-ABI";
+import Web3 from "web3";
+import Web3Modal from 'web3modal';
+import WalletConnectProvider from '@walletconnect/web3-provider';
 
-//Should move api to .env for production. I'm just lazy ....
-const client = new NFTStorage({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGQwOTAzNzkxMTE2Mzc4QzFhMzQzQWNEOTlkODM5QTVjOUNEMTkwZDYiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTYyMjM0MzExMzE0NCwibmFtZSI6Ik1ldGFDYXJkcyJ9.nxK3qwZzikTkvwRqyHAVTPn4ycHW40xFatYM6S2vOZk" });
+import MintingFactory from "./pages/minting_factory";
+import ViewAssests from "./pages/view_assests";
 
-const SelectMetaContainer = styled.div`
-  border: 1px solid black;
-  padding-left: 30px;
-  padding-bottom: 30px;
-
-
-  color: #848485;
-`
-
-const PreviewContainer = styled.div`
-  border: 1px solid black;
-  padding-left: 30px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  color: #848485;
-`
+const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider, // required
+    options: {
+      infuraId: '43b86485d3164682b5d703fd1d39fe1c' // required
+    }
+  }
+}
 
 function App() {
 
-  const [image, setImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
+  const [view, setView] = useState("Home");
 
-  const [metaName, setMetaName] = useState("Enter Name");
-  const [metaDiscrtiption, setMetaDiscription] = useState("Enter Description");
+  const [provider, setProvider] = useState("");
+  const [web3, setWeb3] = useState("");
+  const [userAddress, setUserAddress] = useState("");
+
+  const [addressSet, updateAddressSet] = useState(false);
+
+  const web3Modal = new Web3Modal({
+    network: 'rinkeby', // optional
+    cacheProvider: true, // optional
+    providerOptions // required
+  });
 
   async function loadWeb3() {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      await window.ethereum.enable();
-      return true;
-    } else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-      return true;
+    const provider = await web3Modal.connect();
+    const web3 = await new Web3(provider);
+
+    setProvider(provider);
+    setWeb3(web3);
+
+    if (web3) {
+      console.log("we connected");
+      const EthAccounts = await web3.eth.getAccounts();
+      setUserAddress(EthAccounts[0]);
+      
+      //used because return in the render is NOT async in the return
+      updateAddressSet(true);
+      console.log("Set as Address: " + EthAccounts[0])
     } else {
-      return false;
+      console.log("web3 not found");
     }
   }
 
-  async function mint_new_token(tokenURI) {
-    const web3 = window.web3;
-    const Ethaccounts = await web3.eth.getAccounts();
-
-    const Contract = new web3.eth.Contract(ERC721_ABI, "0x07caD193c8f3d897Cb1e6dA68CFb3108c66D4466");
-
-    const TokenID = 42;
-
-    console.log("Account One: " + Ethaccounts[0]);
-    console.log("TokenID: " + TokenID);
-    console.log("TokenURI: " + tokenURI);
-
-    await Contract.methods.mint(Ethaccounts[0], TokenID, tokenURI)
-                          .send({from: Ethaccounts[0], value: 42})
-                          .once("receipt", (res) => {
-                              console.log(res);
-                          })
-
-  }
-
-  async function submit_data_to_ipfs(){
-    const metadata = await client.store({
-      name: metaName,
-      description: metaDiscrtiption,
-      image: new File([image], 'testing.png', { type: 'image/png' }),
-      attributes : [
-        {
-          trait_type: "Rairty",
-          value: "714"
-        },
-        {
-          trait_type: "Testing",
-          value: "42"
-        }
-      ]
-    })
-    console.log(metadata.url);
-    mint_new_token(metadata.url);
-  }
-
-  useEffect(() => {
-    loadWeb3();
+  useEffect(async () => {
+    await loadWeb3();
   }, [])
 
+  //Could use React Router instead of using condtional rending as componets
   return (
     <>
+      {/* Rending Header Here For Now */}
+      <h2> Welcome to the AvonNFT MarketPlace!</h2>
 
-<h1 Style="text-align: center">Welcome to the minting factory</h1>
-        <SelectMetaContainer>
-          <h2>
-              Select Meta
-          </h2>
-
-          <h3>Name: </h3>
-          <input 
-            type="text"
-            value={metaName}
-            onChange={e => setMetaName(e.target.value)}
-          />
-
-          <h3>Description: </h3>
-          <input
-            type="text"
-            value={metaDiscrtiption}
-            onChange={e => setMetaDiscription(e.target.value)}
-          />
-
-          <h3>Image: </h3> 
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files[0];
-              setPreviewImage(URL.createObjectURL(file));
-              setImage(file);
-            }}
-          />
-          </SelectMetaContainer>
-           
-          <PreviewContainer>
-            <h2>
-              Preview
-            </h2>
-
-            <div Style="border: 1px solid black;
-                        height: 500px; 
-                        width: 500px;">
-              <img style={{width: 500, height: 500}} src={previewImage} /> 
-            </div>
-
-            <br />
-            <br />
-
-            <h3>  Name:  <br /> {metaName} </h3>
-            <h3> Discrtiption: <br /> {metaDiscrtiption} </h3>
-          </PreviewContainer>
-
-          <button onClick={() => submit_data_to_ipfs()}>
-                Mint NFT ->
-            </button>
-          <br />
-          <br />
+      <div>
+        <ul>
+          <li> Home </li>
+          <li> Trade </li>
+          <li onClick={() => setView("ViewAssests")}> View Assests </li>
+          <li onClick={() => setView("Mint")}> Mint NFTs</li>
+          <li> Search </li>
+        </ul>
+      </div>
+    
+      {view == "Mint" && <MintingFactory web3={web3} /> }
+      {view == "ViewAssests" && addressSet &&  <ViewAssests address={userAddress} /> }
+    
     </>
   );
 }
