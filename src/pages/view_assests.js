@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 
 const ImageBox = styled.div`
-    height: 300px;
+    height: 350px;
     width: 300px;
     padding: 20px;
     
@@ -10,8 +10,24 @@ const ImageBox = styled.div`
     margin-right: 15px;
     margin-top: 10px;
     margin-bottom: 10px;
-    border: 1px solid black;
     display: inline-block;
+
+    text-align: center;
+
+    border: 1px solid grey;
+    border-radius: 5px;
+
+    img {
+        border-radius: 5px;
+    }
+
+    :hover{
+        box-shadow: 0 0 10px black;
+        cursor: pointer;
+        transition-timing-function: ease-in;
+        transition: 0.2s;
+        transform: scale(1.03);
+    }
 `
 
 export const Filler = [
@@ -25,13 +41,11 @@ export const Filler = [
     }
 ]
 
-
 export default function View_Assests({address}) {
 
     const [userNFTs, setUserNFTs] = useState(Filler);
 
     function getCurrentAssests() {
-
         console.log("Before Fetch Address: " + address);
         fetch(
             // Mainnet
@@ -64,10 +78,20 @@ export default function View_Assests({address}) {
     return (
         <>
             <h2> View Assests</h2>
+            <ul>
+                <li> Date Joined - 12/12/2012 </li>
+                <li> Total NFT Value: $142,000 </li>
+                <li> Address Balance: 42.22 ETH </li>
+            </ul>
             {userNFTs.map((data) => 
                 <>
                     <ImageBox>
-                        <p> Name: {data.name}</p>
+
+                        <h3 Style="margin-top: -7px;"> Name: {data.name} </h3>
+
+                        <p>Price Bought: 1.42 ETH </p>    
+                        <p>Profit / Losst: <strong Style="color: green"> +$42,000 </strong> </p>
+
                         <img src={data.image_url} height={210} width={210} alt=""/>
                         {/* {<p>Owner: {data.owner.user.username}</p>} */}
                         {/* <p>TokenID: {data.description} </p> */}
