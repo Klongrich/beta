@@ -7,6 +7,53 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 
 import MintingFactory from "./pages/minting_factory";
 import ViewAssests from "./pages/view_assests";
+import HomePage from "./pages/home_page";
+
+const Header = styled.div`
+  ul {
+    list-style-type: none;
+  }
+
+  li {
+    float: left;
+    padding-left: 20px;
+  }
+
+  li:hover{
+    color: red;
+    cursor: pointer;
+  }
+
+  height: 50px;
+  
+  background-color: black;
+  color: white;
+
+  padding-top: 5px;
+`
+
+const ConnectWallet = styled.div`
+  background-color: #FF7500;
+  border-radius: 4px;
+
+  margin-left: 80%;
+  width: 142px;
+  height: 35px;
+    
+  p {
+    text-align: center;
+    margin-top: 9px;
+  }
+
+  :hover {
+    background-color: #FF5A00;
+    cursor: pointer;
+  }
+
+  position: absolute;
+  top: 18px;
+  left: 80px;
+`
 
 const providerOptions = {
   walletconnect: {
@@ -25,7 +72,7 @@ function App() {
   const [web3, setWeb3] = useState("");
   const [userAddress, setUserAddress] = useState("");
 
-  const [addressSet, updateAddressSet] = useState(false);
+  const [addressLoaded, updateAddressLoaded] = useState(false);
 
   const web3Modal = new Web3Modal({
     network: 'rinkeby', // optional
@@ -42,11 +89,10 @@ function App() {
 
     if (web3) {
       console.log("we connected");
-
       //Janky hot fix for now ...
       const EthAccounts = await web3.eth.getAccounts();
       setUserAddress(EthAccounts[0]);
-      updateAddressSet(true);
+      updateAddressLoaded(true);
 
       console.log("Set as Address: " + EthAccounts[0])
     } else {
@@ -55,27 +101,42 @@ function App() {
   }
 
   useEffect(async () => {
-    await loadWeb3();
+    const provider = await web3Modal.connect()
+    
+    if (provider) {
+      loadWeb3(); 
+    } else {
+      console.log("Not Connected!")
+    }
   }, [])
 
   //Could use React Router instead of using condtional rending as componets
   return (
     <>
       {/* Rending Header Here For Now */}
-      <h2> Welcome to the NFT MarketPlace!</h2>
+      {/* <h2> Welcome to the NFT MarketPlace!</h2> */}
 
+      <Header>
       <div>
         <ul>
-          <li> Home </li>
+          <li onClick={() => setView("Home")}> Home </li>
           <li> Trade </li>
           <li onClick={() => setView("ViewAssests")}> View Assests </li>
           <li onClick={() => setView("Mint")}> Mint NFTs</li>
           <li> Search </li>
         </ul>
+
+        <ConnectWallet onClick={() => loadWeb3()}>
+          {!addressLoaded && <p> Connect Wallet </p>}
+          {addressLoaded && <p> {userAddress.substring(0, 6)} ... {userAddress.substring(36, 42)} </p> }
+        </ConnectWallet> 
+      
       </div>
+      </Header>
     
       {view == "Mint" && <MintingFactory web3={web3} /> }
-      {view == "ViewAssests" && addressSet &&  <ViewAssests address={userAddress} /> }
+      {view == "ViewAssests" && addressLoaded &&  <ViewAssests address={userAddress} /> }
+      {view == "Home" && <HomePage />}
     
     </>
   );
