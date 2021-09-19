@@ -42,11 +42,11 @@ function App() {
 
     if (web3) {
       console.log("we connected");
+
+      //Janky hot fix for now ...
       const EthAccounts = await web3.eth.getAccounts();
       setUserAddress(EthAccounts[0]);
-      
-      //used because return in the render is NOT async in the return
-      updateAddressSet(true);
+
       console.log("Set as Address: " + EthAccounts[0])
     } else {
       console.log("web3 not found");
