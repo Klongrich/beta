@@ -62,7 +62,7 @@ function App() {
   return (
     <>
       {/* Rending Header Here For Now */}
-      <h2> Welcome to the AvonNFT MarketPlace!</h2>
+      <h2> Welcome to the NFT MarketPlace!</h2>
 
       <div>
         <ul>
