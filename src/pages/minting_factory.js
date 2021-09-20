@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-import { NFTStorage, Token } from "nft.storage";
-import ERC721_ABI from "../abi/MockNFT.json";
+import { NFTStorage } from 'nft.storage';
+import ERC721_ABI from '../abi/MockNFT.json';
 
-//Should move api to .env for production. I'm just lazy ....
-const client = new NFTStorage({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGQwOTAzNzkxMTE2Mzc4QzFhMzQzQWNEOTlkODM5QTVjOUNEMTkwZDYiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTYyMjM0MzExMzE0NCwibmFtZSI6Ik1ldGFDYXJkcyJ9.nxK3qwZzikTkvwRqyHAVTPn4ycHW40xFatYM6S2vOZk" });
-const ContractAddress = "0x6a8e30e38cfcf81d7741100bfaed3f176140386a";
+// Should move api to .env for production. I'm just lazy ....
+const client = new NFTStorage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGQwOTAzNzkxMTE2Mzc4QzFhMzQzQWNEOTlkODM5QTVjOUNEMTkwZDYiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTYyMjM0MzExMzE0NCwibmFtZSI6Ik1ldGFDYXJkcyJ9.nxK3qwZzikTkvwRqyHAVTPn4ycHW40xFatYM6S2vOZk' });
+const ContractAddress = '0x6a8e30e38cfcf81d7741100bfaed3f176140386a';
 
 const SelectMetaContainer = styled.div`
   border: 1px solid black;
@@ -15,7 +15,7 @@ const SelectMetaContainer = styled.div`
 
 
   color: #848485;
-`
+`;
 
 const PreviewContainer = styled.div`
   border: 1px solid black;
@@ -24,17 +24,14 @@ const PreviewContainer = styled.div`
   margin-bottom: 20px;
 
   color: #848485;
-`
-
+`;
 
 export default function MintingFactory({ web3 }) {
-
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
-  const [metaName, setMetaName] = useState("Enter Name");
-  const [metaDiscrtiption, setMetaDiscription] = useState("Enter Description");
-
+  const [metaName, setMetaName] = useState('Enter Name');
+  const [metaDiscrtiption, setMetaDiscription] = useState('Enter Description');
 
   async function mint_new_token(tokenURI) {
     const Ethaccounts = await web3.eth.getAccounts();
@@ -45,21 +42,19 @@ export default function MintingFactory({ web3 }) {
 
     const TokenID = 2;
 
-    console.log("Account One: " + Ethaccounts[0]);
-    console.log("TokenID: " + TokenID);
-    console.log("TokenURI: " + tokenURI);
-
+    console.log(`Account One: ${Ethaccounts[0]}`);
+    console.log(`TokenID: ${TokenID}`);
+    console.log(`TokenURI: ${tokenURI}`);
 
     // await Contract.methods.tokenURI(Ethaccounts[0]).call(function (error, result) {
     //   console.log(result);
     // });
 
-    await Contract.methods.mint(Ethaccounts[0], TokenID, "https://www.google.com")
+    await Contract.methods.mint(Ethaccounts[0], TokenID, 'https://www.google.com')
       .send({ from: Ethaccounts[0] })
-      .once("receipt", (res) => {
+      .once('receipt', (res) => {
         console.log(res);
-      })
-
+      });
   }
 
   async function submit_data_to_ipfs() {
@@ -69,15 +64,15 @@ export default function MintingFactory({ web3 }) {
       image: new File([image], 'testing.png', { type: 'image/png' }),
       attributes: [
         {
-          trait_type: "Rairty",
-          value: "714"
+          trait_type: 'Rairty',
+          value: '714',
         },
         {
-          trait_type: "Testing",
-          value: "42"
-        }
-      ]
-    })
+          trait_type: 'Testing',
+          value: '42',
+        },
+      ],
+    });
     console.log(metadata.url);
     mint_new_token(metadata.url);
   }
@@ -89,20 +84,20 @@ export default function MintingFactory({ web3 }) {
       <SelectMetaContainer>
         <h2>
           Select Meta
-          </h2>
+        </h2>
 
         <h3>Name: </h3>
         <input
           type="text"
           value={metaName}
-          onChange={e => setMetaName(e.target.value)}
+          onChange={(e) => setMetaName(e.target.value)}
         />
 
         <h3>Description: </h3>
         <input
           type="text"
           value={metaDiscrtiption}
-          onChange={e => setMetaDiscription(e.target.value)}
+          onChange={(e) => setMetaDiscription(e.target.value)}
         />
 
         <h3>Image: </h3>
@@ -121,24 +116,43 @@ export default function MintingFactory({ web3 }) {
       <PreviewContainer>
         <h2>
           Preview
-            </h2>
+        </h2>
 
         <div Style="border: 1px solid black;
-                        height: 500px; 
-                        width: 500px;">
-          <img style={{ width: 500, height: 500 }} src={previewImage} />
+                        height: 500px;
+                        width: 500px;"
+        >
+
+          <img style={{ width: 500, height: 500 }} src={previewImage} alt="" />
+
         </div>
 
         <br />
         <br />
 
-        <h3>  Name:  <br /> {metaName} </h3>
-        <h3> Discrtiption: <br /> {metaDiscrtiption} </h3>
+        <h3>
+          {' '}
+          Name:
+          {' '}
+          <br />
+          {' '}
+          {metaName}
+          {' '}
+        </h3>
+        <h3>
+          {' '}
+          Discrtiption:
+          {' '}
+          <br />
+          {' '}
+          {metaDiscrtiption}
+          {' '}
+        </h3>
       </PreviewContainer>
 
-      <button onClick={() => mint_new_token("Data Filler")}>
-        Mint NFT ->
-            </button>
+      <button onClick={() => mint_new_token('Data Filler')}>
+        Mint NFT
+      </button>
       <br />
       <br />
     </>
