@@ -7,6 +7,7 @@ import { TextField } from "@material-ui/core";
 
 import KIAdata from "./test_collections/koala.json";
 import PUDYdata from "./test_collections/pudgy.json";
+import BAYCdata from "./test_collections/bayc.json";
 
 export const DataFiller = [
     {
@@ -74,12 +75,13 @@ export default function Trade() {
     const [status, setStatus] = useState("home");
 
     function Check_Collection_Input(collection) {
-        console.log(collection);
         if (collection == "PudgyPenguins"){
             setStatus("PUDGY");
         } else if (collection == "Koala Intelligence Agency"){
             setStatus("KIA");
-        } else{
+        } else if (collection == "Bored Ape Yacht Club") {
+            setStatus("BAYC");
+        } else {
             setStatus("Home");
         }
         setOpen(false);
@@ -137,6 +139,29 @@ export default function Trade() {
             )}
 
             {status == "KIA" && KIAdata.map((data) =>
+            <>
+                <ImageBox>
+                    <h3 Style="margin-top: -7px;"> Name: {data.name} </h3>
+                    <p>Current Price: 1.42 ETH </p>    
+             
+                    <img src={data.image} height={210} width={210} alt=""/>
+
+                    <br /> <br />
+                    <button>
+                        Buy NFT
+                    </button>
+                    <button>
+                        Make Offer
+                    </button>
+
+                    <p>
+                        Highest Offers: 1.23 ETHs
+                    </p>
+                </ImageBox>
+            </>
+            )}
+
+            {status == "BAYC" && BAYCdata.map((data) =>
             <>
                 <ImageBox>
                     <h3 Style="margin-top: -7px;"> Name: {data.name} </h3>
