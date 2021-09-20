@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { createTheme } from '@material-ui/core/styles';
 
-const ImageBox = styled.div`
+export const ImageBox = styled.div`
     height: 350px;
     width: 300px;
     padding: 20px;
