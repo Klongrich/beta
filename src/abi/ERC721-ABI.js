@@ -34,11 +34,11 @@ export const ERC721_ABI = [
     },
     //Added Mint Function To ABI
     {
-        "constant" : true,
+        "constant": true,
         "inputs": [
-            { "name" : "to", "type": "address" },
-            { "name" : "tokenId", "type": "uint256" },
-            { "name" : "tokenURI", "type" : "string" }
+            { "name": "to", "type": "address" },
+            { "name": "tokenId", "type": "uint256" },
+            { "name": "tokenURI", "type": "string" }
         ],
         "name": "mint",
         "type": "function"

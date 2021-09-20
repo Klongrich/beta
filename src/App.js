@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import Web3 from "web3";
@@ -103,9 +103,9 @@ function App() {
 
   useEffect(async () => {
     const provider = await web3Modal.connect()
-    
+
     if (provider) {
-      loadWeb3(); 
+      loadWeb3();
     } else {
       console.log("Not Connected!")
     }
@@ -118,28 +118,28 @@ function App() {
       {/* <h2> Welcome to the NFT MarketPlace!</h2> */}
 
       <Header>
-      <div>
-        <ul>
-          <li onClick={() => setView("Home")}> Home </li>
-          <li onClick={() => setView("Trade")}> Trade </li>
-          <li onClick={() => setView("ViewAssests")}> View Assests </li>
-          <li onClick={() => setView("Mint")}> Mint NFTs</li>
-          <li> Search </li>
-        </ul>
+        <div>
+          <ul>
+            <li onClick={() => setView("Home")}> Home </li>
+            <li onClick={() => setView("Trade")}> Trade </li>
+            <li onClick={() => setView("ViewAssests")}> View Assests </li>
+            <li onClick={() => setView("Mint")}> Mint NFTs</li>
+            <li> Search </li>
+          </ul>
 
-        <ConnectWallet onClick={() => loadWeb3()}>
-          {!addressLoaded && <p> Connect Wallet </p>}
-          {addressLoaded && <p> {userAddress.substring(0, 6)} ... {userAddress.substring(36, 42)} </p> }
-        </ConnectWallet> 
-      
-      </div>
+          <ConnectWallet onClick={() => loadWeb3()}>
+            {!addressLoaded && <p> Connect Wallet </p>}
+            {addressLoaded && <p> {userAddress.substring(0, 6)} ... {userAddress.substring(36, 42)} </p>}
+          </ConnectWallet>
+
+        </div>
       </Header>
-    
-      {view == "Mint" && <MintingFactory web3={web3} /> }
-      {view == "ViewAssests" && addressLoaded &&  <ViewAssests address={userAddress} /> }
+
+      {view == "Mint" && <MintingFactory web3={web3} />}
+      {view == "ViewAssests" && addressLoaded && <ViewAssests address={userAddress} />}
       {view == "Home" && <HomePage />}
       {view == "Trade" && <Trade />}
-    
+
     </>
   );
 }

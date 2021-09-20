@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-import { NFTStorage, Token} from "nft.storage";
-import  ERC721_ABI  from "../abi/MockNFT.json";
+import { NFTStorage, Token } from "nft.storage";
+import ERC721_ABI from "../abi/MockNFT.json";
 
 //Should move api to .env for production. I'm just lazy ....
 const client = new NFTStorage({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGQwOTAzNzkxMTE2Mzc4QzFhMzQzQWNEOTlkODM5QTVjOUNEMTkwZDYiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTYyMjM0MzExMzE0NCwibmFtZSI6Ik1ldGFDYXJkcyJ9.nxK3qwZzikTkvwRqyHAVTPn4ycHW40xFatYM6S2vOZk" });
@@ -27,7 +27,7 @@ const PreviewContainer = styled.div`
 `
 
 
-export default function MintingFactory({web3}) {
+export default function MintingFactory({ web3 }) {
 
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -55,19 +55,19 @@ export default function MintingFactory({web3}) {
     // });
 
     await Contract.methods.mint(Ethaccounts[0], TokenID, "https://www.google.com")
-                          .send({from: Ethaccounts[0]})
-                          .once("receipt", (res) => {
-                              console.log(res);
-                          })
+      .send({ from: Ethaccounts[0] })
+      .once("receipt", (res) => {
+        console.log(res);
+      })
 
   }
 
-  async function submit_data_to_ipfs(){
+  async function submit_data_to_ipfs() {
     const metadata = await client.store({
       name: metaName,
       description: metaDiscrtiption,
       image: new File([image], 'testing.png', { type: 'image/png' }),
-      attributes : [
+      attributes: [
         {
           trait_type: "Rairty",
           value: "714"
@@ -85,62 +85,62 @@ export default function MintingFactory({web3}) {
   return (
     <>
 
-    <h1 Style="text-align: center">Welcome to the minting factory</h1>
-        <SelectMetaContainer>
-          <h2>
-              Select Meta
+      <h1 Style="text-align: center">Welcome to the minting factory</h1>
+      <SelectMetaContainer>
+        <h2>
+          Select Meta
           </h2>
 
-          <h3>Name: </h3>
-          <input 
-            type="text"
-            value={metaName}
-            onChange={e => setMetaName(e.target.value)}
-          />
+        <h3>Name: </h3>
+        <input
+          type="text"
+          value={metaName}
+          onChange={e => setMetaName(e.target.value)}
+        />
 
-          <h3>Description: </h3>
-          <input
-            type="text"
-            value={metaDiscrtiption}
-            onChange={e => setMetaDiscription(e.target.value)}
-          />
+        <h3>Description: </h3>
+        <input
+          type="text"
+          value={metaDiscrtiption}
+          onChange={e => setMetaDiscription(e.target.value)}
+        />
 
-          <h3>Image: </h3> 
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files[0];
-              setPreviewImage(URL.createObjectURL(file));
-              setImage(file);
-            }}
-          />
-          </SelectMetaContainer>
-           
-          <PreviewContainer>
-            <h2>
-              Preview
+        <h3>Image: </h3>
+        <input
+          id="file-input"
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            setPreviewImage(URL.createObjectURL(file));
+            setImage(file);
+          }}
+        />
+      </SelectMetaContainer>
+
+      <PreviewContainer>
+        <h2>
+          Preview
             </h2>
 
-            <div Style="border: 1px solid black;
+        <div Style="border: 1px solid black;
                         height: 500px; 
                         width: 500px;">
-              <img style={{width: 500, height: 500}} src={previewImage} /> 
-            </div>
+          <img style={{ width: 500, height: 500 }} src={previewImage} />
+        </div>
 
-            <br />
-            <br />
+        <br />
+        <br />
 
-            <h3>  Name:  <br /> {metaName} </h3>
-            <h3> Discrtiption: <br /> {metaDiscrtiption} </h3>
-          </PreviewContainer>
+        <h3>  Name:  <br /> {metaName} </h3>
+        <h3> Discrtiption: <br /> {metaDiscrtiption} </h3>
+      </PreviewContainer>
 
-          <button onClick={() => mint_new_token("Data Filler")}>
-                Mint NFT ->
+      <button onClick={() => mint_new_token("Data Filler")}>
+        Mint NFT ->
             </button>
-          <br />
-          <br />
+      <br />
+      <br />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import Button from "@material-ui/core/Button";
@@ -77,31 +77,31 @@ const AssesetFilter = styled.div`
 
 const theme = createTheme({
     palette: {
-      primary: {
-        main: "#5a8f04"
-      },
-      secondary: {
-        main: "#751200",
-      },
-      primary1:{
-          main: "rgba(38, 33, 23, 0.62)"
-      }
+        primary: {
+            main: "#5a8f04"
+        },
+        secondary: {
+            main: "#751200",
+        },
+        primary1: {
+            main: "rgba(38, 33, 23, 0.62)"
+        }
     },
-  });
+});
 
 
 export const Filler = [
     {
-      id: 0,
-      data_image_url: "null",
+        id: 0,
+        data_image_url: "null",
     },
     {
-      id: 1,
-      data_image_url: "null",
+        id: 1,
+        data_image_url: "null",
     }
 ]
 
-export default function View_Assests({address}) {
+export default function View_Assests({ address }) {
 
     const [userNFTs, setUserNFTs] = useState(Filler);
 
@@ -132,13 +132,13 @@ export default function View_Assests({address}) {
 
     useEffect(() => {
         getCurrentAssests();
-    },[])
+    }, [])
 
 
     return (
         <>
             <h1 Style="text-align: center;"> View User Assests </h1>
-            
+
             {/* <HeaderBox>
             <h2> View Assests</h2>
             <p Style="margin-left: 140px; margin-top: -40px;">- Created On - 12/12/2012</p>
@@ -155,22 +155,22 @@ export default function View_Assests({address}) {
                 <h2 Style="text-align: center; font-size: 30px"> Assest Filter </h2>
 
                 <div>
-                <ThemeProvider theme={theme}>
-             
-                    <Button style={{minWidth: '142px'}} size="large" variant="contained" color="primary">  Recent  </Button>
-                    <br /> <br />
-                    <Button style={{minWidth: '142px'}} size="large" variant="contained" color="primary">  On Sale </Button>
-                    <br /> <br />
-            
+                    <ThemeProvider theme={theme}>
 
-                    <div Style="text-align: right; margin-top: -120px; margin-right: 18px;">
-                        <Button style={{minWidth: '142px'}} size="large" variant="contained" color="primary">  On Auction </Button>
+                        <Button style={{ minWidth: '142px' }} size="large" variant="contained" color="primary">  Recent  </Button>
                         <br /> <br />
-                        <Button style={{minWidth: '142px'}} size="large" variant="contained" color="primary">  Has Offers </Button>
-                    </div>
-                </ThemeProvider>
+                        <Button style={{ minWidth: '142px' }} size="large" variant="contained" color="primary">  On Sale </Button>
+                        <br /> <br />
+
+
+                        <div Style="text-align: right; margin-top: -120px; margin-right: 18px;">
+                            <Button style={{ minWidth: '142px' }} size="large" variant="contained" color="primary">  On Auction </Button>
+                            <br /> <br />
+                            <Button style={{ minWidth: '142px' }} size="large" variant="contained" color="primary">  Has Offers </Button>
+                        </div>
+                    </ThemeProvider>
                 </div>
-                
+
                 <br />
                 <div Style="border-top: 1px solid black; 
                             margin-right: 18px;
@@ -189,10 +189,10 @@ export default function View_Assests({address}) {
                             padding-bottom: 30px; 
                             margin-right: 18px;">
                     <h2>Price: $USD</h2>
-                    
+
                     <p>Min: </p>
                     <input />
-                    
+
                     <p>Max: </p>
                     <input />
                     <br /> <br />
@@ -202,16 +202,16 @@ export default function View_Assests({address}) {
                 </div>
             </AssesetFilter>
 
-            {userNFTs.map((data) => 
+            {userNFTs.map((data) =>
                 <>
                     <ImageBox>
 
                         <h3 Style="margin-top: -7px;"> Name: {data.name} </h3>
 
-                        <p>Price Bought: 1.42 ETH </p>    
+                        <p>Price Bought: 1.42 ETH </p>
                         <p>Profit / Losst: <strong Style="color: green"> +$42,000 </strong> </p>
 
-                        <img src={data.image_url} height={210} width={210} alt=""/>
+                        <img src={data.image_url} height={210} width={210} alt="" />
                         {/* {<p>Owner: {data.owner.user.username}</p>} */}
                         {/* <p>TokenID: {data.description} </p> */}
                         {/* <p>URL Link: {data.image_url} </p> */}
