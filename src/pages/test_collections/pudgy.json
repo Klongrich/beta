@@ -24,7 +24,8 @@
         ],
         "description": "A collection 8888 Cute Chubby Pudgy Penquins sliding around on the freezing ETH blockchain.",
         "image": "https://api.pudgypenguins.io/penguin/image/0",
-        "name": "Pudgy Penguin #0"
+        "name": "Pudgy Penguin #0",
+        "price": "2.25 ETH"
     },
     {
         "attributes": [
@@ -51,7 +52,8 @@
         ],
         "description": "A collection 8888 Cute Chubby Pudgy Penquins sliding around on the freezing ETH blockchain.",
         "image": "https://api.pudgypenguins.io/penguin/image/1",
-        "name": "Pudgy Penguin #1"
+        "name": "Pudgy Penguin #1",
+        "price": "2.55 ETH"
     },
     {
         "attributes": [
@@ -78,7 +80,8 @@
         ],
         "description": "A collection 8888 Cute Chubby Pudgy Penquins sliding around on the freezing ETH blockchain.",
         "image": "https://api.pudgypenguins.io/penguin/image/2",
-        "name": "Pudgy Penguin #2"
+        "name": "Pudgy Penguin #2",
+        "price": "2.99 ETH"
     },
     {
         "attributes": [
@@ -105,6 +108,7 @@
         ],
         "description": "A collection 8888 Cute Chubby Pudgy Penquins sliding around on the freezing ETH blockchain.",
         "image": "https://api.pudgypenguins.io/penguin/image/3",
-        "name": "Pudgy Penguin #3"
+        "name": "Pudgy Penguin #3",
+        "price": "3.22 ETH"
     }
 ]

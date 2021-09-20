@@ -169,7 +169,7 @@ export default function Trade() {
               Name:
               {data.name}
             </h3>
-            <p>Current Price: 1.42 ETH </p>
+            <p>Current Price: {data.price}</p>
 
             <img src={data.image} height={210} width={210} alt="" />
 
@@ -184,7 +184,7 @@ export default function Trade() {
             </button>
 
             <p>
-              Highest Offers: 1.23 ETHs
+              Highest Offer: 1.85 ETH
             </p>
           </ImageBox>
         </>
@@ -198,7 +198,7 @@ export default function Trade() {
               Name:
               {data.name}
             </h3>
-            <p>Current Price: 1.42 ETH </p>
+            <p>Current Price: {data.price} </p>
 
             <img src={data.image} height={210} width={210} alt="" />
 
@@ -213,7 +213,7 @@ export default function Trade() {
             </button>
 
             <p>
-              Highest Offers: 1.23 ETHs
+              Highest Offer: 0.322 ETH
             </p>
           </ImageBox>
         </>
@@ -227,7 +227,7 @@ export default function Trade() {
               Name:
               {data.name}
             </h3>
-            <p>Current Price: 1.42 ETH </p>
+            <p>Current Price: {data.price} </p>
 
             <img src={data.image} height={210} width={210} alt="" />
 
@@ -242,7 +242,7 @@ export default function Trade() {
             </button>
 
             <p>
-              Highest Offers: 1.23 ETHs
+              Highest Offer: 28.562 ETH
             </p>
           </ImageBox>
         </>

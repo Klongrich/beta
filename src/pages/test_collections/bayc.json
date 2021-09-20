@@ -1,6 +1,7 @@
 [
     {
         "name": "Bored Ape #0",
+        "price": "39.98 ETH",
         "image": "https://bafybeibnzhc7vp4hnfcocw7s2jej2tj5xqpwseyz3ifylismh47cr45rhm.ipfs.dweb.link/",
         "attributes": [
             {
@@ -31,6 +32,7 @@
     },
     {
         "name": "Bored Ape #1",
+        "price": "39.99 ETH",
         "image": "https://bafybeiasy6wuw4qtbnccjc62nwxfwsu3vd3gk3k3qmxcai45uygesio5hu.ipfs.dweb.link/",
         "attributes": [
             {
@@ -57,6 +59,7 @@
     },
     {
         "name": "Bored Ape #2",
+        "price": "41.12 ETH",
         "image": "https://bafybeigppg3dy2o7hw3vidfcupt5peqc4esdpsrnzp2ypwwcgp6ax5rk7m.ipfs.dweb.link/",
         "attributes": [
             {
@@ -83,6 +86,7 @@
     },
     {
         "name": "Bored Ape #3",
+        "price": "43.22 ETH",
         "image": "https://bafybeie5ycnlx5ukzhlecakrbjeqnkpanuolobatuqooaeguptulganq6u.ipfs.dweb.link/",
         "attributes": [
             {
