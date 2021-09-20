@@ -59,18 +59,25 @@ const TopCollections = ['Galaxy Eggs',
                         'CHIBI DINOS',
                         'Star Sailor Sibings',
                         'JunkYardDogs',
-                        'Template'];
+                        'Template',
+                        'CryptoPunks',
+                        'Deafbeef'];
 
 export default function Trade() {
 
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState("This is the input");
 
+    function Check_Collection_Input(collection) {
+        console.log(collection);
+        setOpen(false);
+    }
+
     return (
         <>
             <h1> Trade </h1>
             
-            {/* This Autocomplete section is copied and pasted from StackOver-Flow. */}
+            {/* This Autocomplete section is copied and pasted from StackOver-Flow. (: */}
 
             <Autocomplete
                 open={open}
@@ -79,13 +86,17 @@ export default function Trade() {
                         setOpen(true);
                     }
                 }}
-                onClose={() => setOpen(false)}
                 inputValue={inputValue}
                 onInputChange={(e, value, reason) => {
                     setInputValue(value);
                     if (!value) {
                         setOpen(false);
                     }   
+                }}
+
+                onChange={(e, value, reason) => {
+                    console.log("Value: " + value);
+                    Check_Collection_Input(value);
                 }}
                 options={TopCollections}
                 renderInput={(params) => (
