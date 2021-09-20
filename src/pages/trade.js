@@ -97,6 +97,9 @@ export default function Trade() {
   function Check_Collection_Input(collection) {
     console.log(`collection matching value: ${collection}`);
 
+    // Change to API calls. 
+    // Make status a number 1 - (x-amount of collections)
+
     if (collection == 'PudgyPenguins') {
       setStatus('PUDGY');
     } else if (collection == 'Koala Intelligence Agency') {
