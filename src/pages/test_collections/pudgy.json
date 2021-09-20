@@ -1,0 +1,50 @@
+[
+    {
+        "attributes":[
+            {"trait_type":"Background","value":"Purple"},
+            {"trait_type":"Skin","value":"Mint"},
+            {"trait_type":"Body","value":"Hoodie Pink"},
+            {"trait_type":"Face","value":"Winking"},
+            {"trait_type":"Head","value":"Wizard Hat"}
+            ],
+        "description":"A collection 8888 Cute Chubby Pudgy Penquins sliding around on the freezing ETH blockchain.",
+        "image":"https://api.pudgypenguins.io/penguin/image/0",
+        "name":"Pudgy Penguin #0"
+    },
+    {
+        "attributes":[
+            {"trait_type":"Background","value":"Beige"},
+            {"trait_type":"Skin","value":"Light Gray"},
+            {"trait_type":"Body","value":"Tribal Necklace"},
+            {"trait_type":"Face","value":"Beard"},
+            {"trait_type":"Head","value":"Bowl Cut"}
+            ],
+        "description":"A collection 8888 Cute Chubby Pudgy Penquins sliding around on the freezing ETH blockchain.",
+        "image":"https://api.pudgypenguins.io/penguin/image/1",
+        "name":"Pudgy Penguin #1"
+    },
+    {
+        "attributes":[
+            {"trait_type":"Background","value":"Blue"},
+            {"trait_type":"Skin","value":"Normal"},
+            {"trait_type":"Body","value":"Bow Tie Pink"},
+            {"trait_type":"Face","value":"Blushing"},
+            {"trait_type":"Head","value":"Durag Red"}
+            ],
+        "description":"A collection 8888 Cute Chubby Pudgy Penquins sliding around on the freezing ETH blockchain.",
+        "image":"https://api.pudgypenguins.io/penguin/image/2",
+        "name":"Pudgy Penguin #2"
+    },
+    {
+        "attributes":[
+            {"trait_type":"Background","value":"Blue"},
+            {"trait_type":"Skin","value":"Olive Green"},
+            {"trait_type":"Body","value":"Shirt Red"},
+            {"trait_type":"Face","value":"Normal"},
+            {"trait_type":"Head","value":"Durag Red"}
+            ],
+        "description":"A collection 8888 Cute Chubby Pudgy Penquins sliding around on the freezing ETH blockchain.",
+        "image":"https://api.pudgypenguins.io/penguin/image/3",
+        "name":"Pudgy Penguin #3"
+    }
+]

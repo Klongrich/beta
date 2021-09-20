@@ -5,6 +5,9 @@ import { ImageBox } from "./view_assests";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField } from "@material-ui/core";
 
+import KIAdata from "./test_collections/koala.json";
+import PUDYdata from "./test_collections/pudgy.json";
+
 export const DataFiller = [
     {
       id: 0,
@@ -66,10 +69,19 @@ const TopCollections = ['Galaxy Eggs',
 export default function Trade() {
 
     const [open, setOpen] = useState(false);
-    const [inputValue, setInputValue] = useState("This is the input");
+    const [inputValue, setInputValue] = useState("");
+
+    const [status, setStatus] = useState("home");
 
     function Check_Collection_Input(collection) {
         console.log(collection);
+        if (collection == "PudgyPenguins"){
+            setStatus("PUDGY");
+        } else if (collection == "Koala Intelligence Agency"){
+            setStatus("KIA");
+        } else{
+            setStatus("Home");
+        }
         setOpen(false);
     }
 
@@ -77,8 +89,6 @@ export default function Trade() {
         <>
             <h1> Trade </h1>
             
-            {/* This Autocomplete section is copied and pasted from StackOver-Flow. (: */}
-
             <Autocomplete
                 open={open}
                 onOpen={() => {
@@ -93,9 +103,7 @@ export default function Trade() {
                         setOpen(false);
                     }   
                 }}
-
                 onChange={(e, value, reason) => {
-                    console.log("Value: " + value);
                     Check_Collection_Input(value);
                 }}
                 options={TopCollections}
@@ -105,19 +113,38 @@ export default function Trade() {
             />
             <br /> <br /> 
    
-            {DataFiller.map((data) =>
+            {status == "PUDGY" && PUDYdata.map((data) =>
             <>
                 <ImageBox>
-                    <h3 Style="margin-top: -7px;"> Name: </h3>
-                    <p>Current Price: {data.listed_price} ETH </p>    
+                    <h3 Style="margin-top: -7px;"> Name: {data.name} </h3>
+                    <p>Current Price: 1.42 ETH </p>    
              
-                    <div Style="height: 50px; 
-                            width: 50px; 
-                            border: 1px solid black;
-                            margin-left: 120px;
-                            margin-bottom: 30px;">
-                    </div>
-            
+                    <img src={data.image} height={210} width={210} alt=""/>
+
+                    <br /> <br />
+                    <button>
+                        Buy NFT
+                    </button>
+                    <button>
+                        Make Offer
+                    </button>
+
+                    <p>
+                        Highest Offers: 1.23 ETHs
+                    </p>
+                </ImageBox>
+            </>
+            )}
+
+            {status == "KIA" && KIAdata.map((data) =>
+            <>
+                <ImageBox>
+                    <h3 Style="margin-top: -7px;"> Name: {data.name} </h3>
+                    <p>Current Price: 1.42 ETH </p>    
+             
+                    <img src={data.image} height={210} width={210} alt=""/>
+
+                    <br /> <br />
                     <button>
                         Buy NFT
                     </button>
