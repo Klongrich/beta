@@ -8,6 +8,7 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import MintingFactory from "./pages/minting_factory";
 import ViewAssests from "./pages/view_assests";
 import HomePage from "./pages/home_page";
+import Trade from "./pages/trade";
 
 const Header = styled.div`
   ul {
@@ -120,7 +121,7 @@ function App() {
       <div>
         <ul>
           <li onClick={() => setView("Home")}> Home </li>
-          <li> Trade </li>
+          <li onClick={() => setView("Trade")}> Trade </li>
           <li onClick={() => setView("ViewAssests")}> View Assests </li>
           <li onClick={() => setView("Mint")}> Mint NFTs</li>
           <li> Search </li>
@@ -137,6 +138,7 @@ function App() {
       {view == "Mint" && <MintingFactory web3={web3} /> }
       {view == "ViewAssests" && addressLoaded &&  <ViewAssests address={userAddress} /> }
       {view == "Home" && <HomePage />}
+      {view == "Trade" && <Trade />}
     
     </>
   );
