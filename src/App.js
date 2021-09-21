@@ -9,6 +9,7 @@ import MintingFactory from './pages/minting_factory';
 import ViewAssests from './pages/view_assests';
 import HomePage from './pages/home_page';
 import Trade from './pages/trade';
+import Analytics from "./pages/analytics";
 
 const Header = styled.div`
   ul {
@@ -139,7 +140,7 @@ function App() {
             <li onClick={() => setView('Trade')}> Trade </li>
             <li onClick={() => setView('ViewAssests')}> View Assests </li>
             <li onClick={() => setView('Mint')}> Mint NFTs</li>
-            <li> Search </li>
+            <li onClick={() => setView('Analytics')}> Analytics </li>
           </ul>
 
           <ConnectWallet onClick={() => loadWeb3()}>
@@ -166,6 +167,7 @@ function App() {
       {view === 'ViewAssests' && addressLoaded && <ViewAssests address={userAddress} web3={web3} />}
       {view === 'Home' && <HomePage />}
       {view === 'Trade' && <Trade />}
+      {view == 'Analytics' && <Analytics />}
 
     </>
   );

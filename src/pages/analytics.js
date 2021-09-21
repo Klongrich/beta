@@ -1,0 +1,76 @@
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+
+export const Filler = [
+    {
+        id: 0,
+        data_image_url: "null",
+    },
+    {
+        id: 1,
+        data_image_url: "null",
+    }
+]
+
+export default function Analytics() {
+
+    const [recentListings, setRecentListings] = useState(Filler);
+
+    const [wallaFloor, setWallaFloor] = useState("");
+    const [pudgyFloor, setPudgyFloor] = useState("");
+
+    async function getRecentListings() {
+        fetch('https://api.opensea.io/api/v1/events?asset_contract_address=0x3f5fb35468e9834a43dca1c160c69eaae78b6360')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data.asset_events);
+                setRecentListings(data.asset_events);
+            })
+    }
+
+    //Scraps the fucking html and parses the floor price .... thank you so much open-sea.
+    async function ifThisWorksLOL(ContractAddress, setVar) {
+        fetch('https://opensea.io/assets/' + ContractAddress + '/1120')
+            .then(res => res.text())
+            .then(data => {
+                let temp = data.split("floorPrice");
+                let temp2 = temp[1].split(",");
+                setVar(temp2[0].slice(2, 6))
+            })
+    }
+
+    useState(async () => {
+        await ifThisWorksLOL("0xbd3531da5cf5857e7cfaa92426877b022e612cf8", setPudgyFloor);
+        await ifThisWorksLOL("0x3f5fb35468e9834a43dca1c160c69eaae78b6360", setWallaFloor);
+        //await getRecentListings();
+    }, [])
+
+    return (
+        <>
+            <h2> This is The Analytics Page </h2>
+
+            <p> Would like to add the ability to create scanners / watchers </p>
+
+            <div Style="border-top: 1px solid black; padding-top; 10px;">
+                <h3> Current Koala Floor - {wallaFloor} ETH </h3>
+                <h4> New Listings </h4>
+
+                {/* 
+                {userNFT.map((data) =>
+                    <>
+                        <p> {data.asset.name} </p>
+                        <img src={data.asset.image_url} height="210px;" width="210px" alt="" />
+                        <p>Current Bid: {data.asset.bid_amount} </p>
+                    </>
+                )} */}
+
+                <h3> Current Pudgy Penguin Floor - {pudgyFloor} ETH</h3>
+                <h4> New Listings </h4>
+                <div Style="border: 1px solid black;">
+                    <p>Add a list of new listings here</p>
+                </div>
+
+            </div>
+        </>
+    )
+}
