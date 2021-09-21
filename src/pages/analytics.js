@@ -18,6 +18,8 @@ export default function Analytics() {
 
     const [wallaFloor, setWallaFloor] = useState("");
     const [pudgyFloor, setPudgyFloor] = useState("");
+    const [sappyFloor, setSappyFloor] = useState("");
+    const [boredApeFloor, setBoredApeFloor] = useState("");
 
     async function getRecentListings() {
         fetch('https://api.opensea.io/api/v1/events?asset_contract_address=0x3f5fb35468e9834a43dca1c160c69eaae78b6360')
@@ -42,6 +44,8 @@ export default function Analytics() {
     useState(async () => {
         await ifThisWorksLOL("0xbd3531da5cf5857e7cfaa92426877b022e612cf8", setPudgyFloor);
         await ifThisWorksLOL("0x3f5fb35468e9834a43dca1c160c69eaae78b6360", setWallaFloor);
+        await ifThisWorksLOL("0x364C828eE171616a39897688A831c2499aD972ec", setSappyFloor);
+        await ifThisWorksLOL("0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d", setBoredApeFloor)
         //await getRecentListings();
     }, [])
 
@@ -52,6 +56,7 @@ export default function Analytics() {
             <p> Would like to add the ability to create scanners / watchers </p>
 
             <div Style="border-top: 1px solid black; padding-top; 10px;">
+                <h2> Open-sea Floors </h2>
                 <h3> Current Koala Floor - {wallaFloor} ETH </h3>
                 <h4> New Listings </h4>
 
@@ -66,9 +71,12 @@ export default function Analytics() {
 
                 <h3> Current Pudgy Penguin Floor - {pudgyFloor} ETH</h3>
                 <h4> New Listings </h4>
-                <div Style="border: 1px solid black;">
-                    <p>Add a list of new listings here</p>
-                </div>
+
+                <h3> Current Sappy Seal Floor = {sappyFloor} ETH </h3>
+                <h4> New Listings </h4>
+
+                <h3> Current Bored Apy Yatch Club Floor = {boredApeFloor} ETH</h3>
+                <h4> New Listings </h4>
 
             </div>
         </>
