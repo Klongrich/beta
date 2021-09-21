@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { local } from "web3modal";
 
 export const Filler = [
     {
@@ -17,10 +18,10 @@ export default function Analytics() {
     const [recentListings, setRecentListings] = useState(Filler);
 
     //Move to JSON object instead of consts
-    const [wallaFloor, setWallaFloor] = useState("");
-    const [pudgyFloor, setPudgyFloor] = useState("");
-    const [sappyFloor, setSappyFloor] = useState("");
-    const [boredApeFloor, setBoredApeFloor] = useState("");
+    const [wallaFloor, setWallaFloor] = useState(13.37);
+    const [pudgyFloor, setPudgyFloor] = useState(4.2);
+    const [sappyFloor, setSappyFloor] = useState(0.42);
+    const [boredApeFloor, setBoredApeFloor] = useState(0.1337);
 
     async function getRecentListings() {
         fetch('https://api.opensea.io/api/v1/events?asset_contract_address=0x3f5fb35468e9834a43dca1c160c69eaae78b6360')
@@ -36,18 +37,38 @@ export default function Analytics() {
         fetch('https://opensea.io/collection/' + Collection)
             .then(res => res.text())
             .then(data => {
-                console.log(data);
                 let temp = data.split("floorPrice");
                 let temp2 = temp[1].split(",");
-                setVar(temp2[0].slice(2, 6))
+                localStorage.setItem(Collection, temp2[0].slice(2, 6));
+                setVar(temp2[0].slice(2, 6));
             })
     }
 
-    useState(async () => {
-        await ifThisWorksLOL("pudgypenguins", setPudgyFloor);
-        await ifThisWorksLOL("koala-intelligence-agency", setWallaFloor);
-        await ifThisWorksLOL("sappy-seals", setSappyFloor);
-        await ifThisWorksLOL("boredapeyachtclub", setBoredApeFloor)
+    //Set to update local stroage and floor only every 5 min - 10 min
+    async function LocalStorageManagment() {
+        //300 - 600 = 5 - 10 mins in unix time
+        var lastCached = localStorage.getItem('time_stamp')
+        var timeStamp = Math.floor(Date.now() / 1000);
+
+        var timeSinceLastSave = timeStamp - lastCached;
+
+        if (timeSinceLastSave > 300 || !lastCached) {
+            await ifThisWorksLOL("pudgypenguins", setPudgyFloor);
+            await ifThisWorksLOL("koala-intelligence-agency", setWallaFloor);
+            await ifThisWorksLOL("sappy-seals", setSappyFloor);
+            await ifThisWorksLOL("boredapeyachtclub", setBoredApeFloor);
+
+            localStorage.setItem('time_stamp', timeStamp);
+        }
+
+        setPudgyFloor(localStorage.getItem('pudgypenguins'))
+        setWallaFloor(localStorage.getItem("koala-intelligence-agency"));
+        setSappyFloor(localStorage.getItem("sappy-seals"));
+        setBoredApeFloor(localStorage.getItem('boredapeyachtclub'));
+    }
+
+    useState(() => {
+        LocalStorageManagment();
         //await getRecentListings();
     }, [])
 
