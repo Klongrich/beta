@@ -16,6 +16,7 @@ export default function Analytics() {
 
     const [recentListings, setRecentListings] = useState(Filler);
 
+    //Move to JSON object instead of consts
     const [wallaFloor, setWallaFloor] = useState("");
     const [pudgyFloor, setPudgyFloor] = useState("");
     const [sappyFloor, setSappyFloor] = useState("");
@@ -31,10 +32,11 @@ export default function Analytics() {
     }
 
     //Scraps the fucking html and parses the floor price .... thank you so much open-sea.
-    async function ifThisWorksLOL(ContractAddress, setVar) {
-        fetch('https://opensea.io/assets/' + ContractAddress + '/1120')
+    async function ifThisWorksLOL(Collection, setVar) {
+        fetch('https://opensea.io/collection/' + Collection)
             .then(res => res.text())
             .then(data => {
+                console.log(data);
                 let temp = data.split("floorPrice");
                 let temp2 = temp[1].split(",");
                 setVar(temp2[0].slice(2, 6))
@@ -42,10 +44,10 @@ export default function Analytics() {
     }
 
     useState(async () => {
-        await ifThisWorksLOL("0xbd3531da5cf5857e7cfaa92426877b022e612cf8", setPudgyFloor);
-        await ifThisWorksLOL("0x3f5fb35468e9834a43dca1c160c69eaae78b6360", setWallaFloor);
-        await ifThisWorksLOL("0x364C828eE171616a39897688A831c2499aD972ec", setSappyFloor);
-        await ifThisWorksLOL("0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d", setBoredApeFloor)
+        await ifThisWorksLOL("pudgypenguins", setPudgyFloor);
+        await ifThisWorksLOL("koala-intelligence-agency", setWallaFloor);
+        await ifThisWorksLOL("sappy-seals", setSappyFloor);
+        await ifThisWorksLOL("boredapeyachtclub", setBoredApeFloor)
         //await getRecentListings();
     }, [])
 
