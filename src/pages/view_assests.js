@@ -11,6 +11,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogContent from "@material-ui/core/DialogContent";
 import { TextField } from "@material-ui/core"
 
+import ContractABI from "../abi/ERC721-ABI";
+const ExchangeContractAddress = '0x6a8e30e38cfcf81d7741100bfaed3f176140386a';
 
 export const ImageBox = styled.div`
     height: 350px;
@@ -73,7 +75,6 @@ const theme = createTheme({
     },
 });
 
-
 export const Filler = [
     {
         id: 0,
@@ -85,7 +86,7 @@ export const Filler = [
     }
 ]
 
-export default function View_Assests({ address }) {
+export default function View_Assests({ address, web3 }) {
 
     const [userNFTs, setUserNFTs] = useState(Filler);
     const [isListing, setItsListing] = useState(false);
@@ -135,6 +136,19 @@ export default function View_Assests({ address }) {
         setItsListing(true);
     }
 
+    async function sendDataToEthereum() {
+        const Ethaccounts = await web3.eth.getAccounts();
+
+        const Contract = new web3.eth.Contract(ContractABI, ExchangeContractAddress);
+
+        await Contract.methods.mint(Ethaccounts[0], 42, 'https://www.42.fr')
+            .send({ from: Ethaccounts[0] })
+            .once('receipt', (res) => {
+                console.log(res);
+            });
+
+        console.log(`Account One: ${Ethaccounts[0]}`);
+    }
 
     function submitListing() {
         if (listingApproved) {
@@ -147,8 +161,11 @@ export default function View_Assests({ address }) {
         } else if (confrimPrice && !listingApproved) {
             //function to submit listing with Web3-js call
             console.log("Listing nft .....");
+            sendDataToEthereum();
         }
     }
+
+
 
     function handleToClose() {
         setItsListing(false);
@@ -166,14 +183,14 @@ export default function View_Assests({ address }) {
                 <AssesetFilter>
                     <h2 Style="text-align: center; font-size: 30px"> Assest Filter </h2>
                     <div>
-                        <Button style={{ minWidth: '142px' }} size="large" variant="contained" color="primary">  Recent  </Button>
+                        <Button style={{ minWidth: '112px' }} size="large" variant="contained" color="primary">  Recent  </Button>
                         <br /> <br />
-                        <Button style={{ minWidth: '142px' }} size="large" variant="contained" color="primary">  On Sale </Button>
+                        <Button style={{ minWidth: '112px' }} size="large" variant="contained" color="primary">  On Sale </Button>
                         <br /> <br />
                         <div Style="text-align: right; margin-top: -120px; margin-right: 18px;">
-                            <Button style={{ minWidth: '142px' }} size="large" variant="contained" color="primary">  On Auction </Button>
+                            <Button style={{ minWidth: '112px' }} size="large" variant="contained" color="primary">  On Auction </Button>
                             <br /> <br />
-                            <Button style={{ minWidth: '142px' }} size="large" variant="contained" color="primary">  Has Offers </Button>
+                            <Button style={{ minWidth: '112px' }} size="large" variant="contained" color="primary">  Has Offers </Button>
                         </div>
                     </div>
                     <br />
@@ -222,15 +239,18 @@ export default function View_Assests({ address }) {
                             {/* <p>URL Link: {data.image_url} </p> */}
                             <br /> <br />
                             <button onClick={() => listCurrentAssest(data.image_url, data.name)}>
-                                Sell NFT
-                        </button>
+                                List Your NFT
+                            </button>
+                            <button>
+                                More Info
+                            </button>
                         </ImageBox>
                     </>
                 )}
 
                 <Dialog open={isListing} onClose={handleToClose}>
                     <DialogContent>
-                        <div Style="width: 300px; text-align: center;">
+                        <div Style="width: 300px; text-align: center; padding-bottom: 30px;">
                             <DialogContentText>
                                 <h2 Style="text-align: center;">List Your Item</h2>
 
@@ -240,7 +260,7 @@ export default function View_Assests({ address }) {
                                 <br /> <br />
                                 <TextField style={{ minWidth: "240px " }}
                                     id="outlined-basic"
-                                    label="Price"
+                                    label="Price ETH"
                                     variant="outlined"
                                     onChange={e => setListingPrice(e.target.value)} />
                                 <br /> <br />

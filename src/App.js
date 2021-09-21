@@ -163,7 +163,7 @@ function App() {
       </Header>
 
       {view === 'Mint' && <MintingFactory web3={web3} />}
-      {view === 'ViewAssests' && addressLoaded && <ViewAssests address={userAddress} />}
+      {view === 'ViewAssests' && addressLoaded && <ViewAssests address={userAddress} web3={web3} />}
       {view === 'Home' && <HomePage />}
       {view === 'Trade' && <Trade />}
 
