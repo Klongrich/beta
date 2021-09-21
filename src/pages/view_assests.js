@@ -41,28 +41,6 @@ export const ImageBox = styled.div`
     }
 `
 
-const HeaderBox = styled.div`
-
-    ul {
-        list-style-type: none;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-
-    li {
-        float: left;
-        padding-left: 24px;
-    }
-
-    background-color: grey;
-    height: 142px;
-
-    padding: 5px;
-    padding-left: 15px;
-
-    margin-bottom: 20px;
-`
-
 const AssesetFilter = styled.div`
     height: 1000px;
     width: 22%;
