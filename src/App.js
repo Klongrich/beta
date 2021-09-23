@@ -10,6 +10,7 @@ import ViewAssests from './pages/view_assests';
 import HomePage from './pages/home_page';
 import Trade from './pages/trade';
 import Analytics from "./pages/analytics";
+import SearchBoxBeta from "./pages/search_box_beta";
 
 const Header = styled.div`
   ul {
@@ -141,6 +142,7 @@ function App() {
             <li onClick={() => setView('ViewAssests')}> View Assests </li>
             <li onClick={() => setView('Mint')}> Mint NFTs</li>
             <li onClick={() => setView('Analytics')}> Analytics </li>
+            <li onClick={() => setView('SearchBoxBeta')}> SearchBeta</li>
           </ul>
 
           <ConnectWallet onClick={() => loadWeb3()}>
@@ -168,6 +170,7 @@ function App() {
       {view === 'Home' && <HomePage />}
       {view === 'Trade' && <Trade />}
       {view == 'Analytics' && <Analytics />}
+      {view == 'SearchBoxBeta' && <SearchBoxBeta />}
 
     </>
   );
