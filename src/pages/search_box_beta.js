@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 
 import { ListFur } from "../data/koalaMetaDecoder";
 import { FurKey } from "../data/koalaMetaDecoder";
@@ -13,6 +14,11 @@ import DraftsIcon from '@mui/icons-material/Drafts';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
+
+import PudgyLogo from "../data/images/PudgyPenguinLogo.jpeg";
+import KIAlogo from "../data/images/KIAlogo.png";
+import SappyLogo from "../data/images/SappyLogo.jpeg";
+import BAYClogo from "../data/images/BAYClogo.png";
 
 const MockState = [
     {
@@ -31,10 +37,31 @@ const MockState = [
     }
 ]
 
+const SelectBarBox = styled.div`
+    padding-left: 20px;
+    padding-right: 20px;
+
+
+    img {
+        border: 1px solid grey;
+        border-radius: 5px;
+        margin-left: 20px;
+        margin-right: 20px;
+
+        :hover {
+            background-color: grey;
+        }
+
+        padding: 5px;
+    }
+`
+
 export default function SerachBox() {
 
     const [searchMeta, setSearchMeta] = useState(MockState);
     const [open, setOpen] = useState(false);
+
+    const [currentCollection, setCurrentCollection] = useState("Wallas");
 
     const handleClick = () => {
         setOpen(!open);
@@ -51,9 +78,16 @@ export default function SerachBox() {
 
     return (
         <>
-            <h2>Walla-Watch!</h2>
+            <h2>Choose Collection! </h2>
 
-            <h3>Recently Listed Wallas</h3>
+            <SelectBarBox>
+                <img onClick={() => setCurrentCollection("Pudgys")} src={PudgyLogo} height={142} widht={142} alt="" />
+                <img onClick={() => setCurrentCollection("Wallas")} src={KIAlogo} height={142} widht={142} alt="" />
+                <img onClick={() => setCurrentCollection("Sappy Seals")} src={SappyLogo} height={142} widht={142} alt="" />
+                <img onClick={() => setCurrentCollection("BAYC")} src={BAYClogo} height={142} widht={142} alt="" />
+            </SelectBarBox>
+
+            <h3>Recently Listed {currentCollection} </h3>
 
             <div Style="border: 1px solid black">
                 <List
