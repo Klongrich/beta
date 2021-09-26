@@ -187,7 +187,7 @@ export default function SerachBox() {
                     >
                         <p> TokenID: {data.tokenID} </p>
                         <p> Fur: {data.fur} -> {FurKey[data.fur]}</p>
-                        <p> role: {data.role}</p>
+                        <p> role: {data.role} -> {RoleKey[data.role]} </p>
                         <p> head: {data.head} </p>
                         <p> mouth: {data.mouth} </p>
                         <p> role: {data.role} </p>
