@@ -56,8 +56,8 @@ app.get("/role", function (req, res, next) {
     //Adding Basic Checks
     if (roleID < 0) {
         res.send("ID is less than 0");
-    } else if (roleID > 4) {
-        res.send("ID is greater than 4");
+    } else if (roleID > 5) {
+        res.send("ID is greater than 5");
     } else {
         con.query(query, function (err, results, feields) {
             if (err) throw err;
