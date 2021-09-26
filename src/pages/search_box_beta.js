@@ -4,6 +4,9 @@ import styled from "styled-components";
 import { ListFur } from "../data/koalaMetaDecoder";
 import { FurKey } from "../data/koalaMetaDecoder";
 
+import { ListRole } from "../data/koalaMetaDecoder";
+import { RoleKey } from "../data/koalaMetaDecoder";
+
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -19,6 +22,7 @@ import PudgyLogo from "../data/images/PudgyPenguinLogo.jpeg";
 import KIAlogo from "../data/images/KIAlogo.png";
 import SappyLogo from "../data/images/SappyLogo.jpeg";
 import BAYClogo from "../data/images/BAYClogo.png";
+import { queryAllByRole } from "@testing-library/dom";
 
 const MockState = [
     {
@@ -60,6 +64,7 @@ export default function SerachBox() {
 
     const [searchMeta, setSearchMeta] = useState(MockState);
     const [open, setOpen] = useState(false);
+    const [roleOpen, setRoleOpen] = useState(false);
 
     const [currentCollection, setCurrentCollection] = useState("Wallas");
 
@@ -67,8 +72,21 @@ export default function SerachBox() {
         setOpen(!open);
     }
 
+    const handleRoleClick = () => {
+        setRoleOpen(!roleOpen);
+    }
+
     function queryFur(id) {
         fetch("http://localhost:3015/fur?id=" + id)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setSearchMeta(data);
+            })
+    }
+
+    function queryRole(id) {
+        fetch("http://localhost:3015/role?id=" + id)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -125,6 +143,33 @@ export default function SerachBox() {
                             )}
                         </List>
                     </Collapse>
+
+                    <ListItemButton onClick={handleRoleClick}>
+                        <ListItemIcon>
+                            <DraftsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Role" />
+                        {open ? <ExpandLess /> : <ExpandMore />}
+                    </ListItemButton>
+
+                    <Collapse in={roleOpen}
+                        timeout="auto"
+                        collapsedSize="0px"
+                        unmountOnExit>
+                        <List component="div" disablePadding>
+                            {ListRole.map((roledata) =>
+                                <>
+                                    <ListItemButton sx={{ pl: 4 }} onClick={() => queryRole(roledata.id)}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText primary={roledata.text} />
+                                    </ListItemButton>
+                                </>
+                            )}
+                        </List>
+                    </Collapse>
+
                 </List>
             </div>
 
@@ -142,7 +187,7 @@ export default function SerachBox() {
                     >
                         <p> TokenID: {data.tokenID} </p>
                         <p> Fur: {data.fur} -> {FurKey[data.fur]}</p>
-                        <p> role: {data.role} </p>
+                        <p> role: {data.role}</p>
                         <p> head: {data.head} </p>
                         <p> mouth: {data.mouth} </p>
                         <p> role: {data.role} </p>
