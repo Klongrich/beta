@@ -26,7 +26,7 @@ con.connect((err) => {
     console.log('Connection established');
 });
 
-//Add a request limited by IP until AUTH 
+//Add a request limitor. Flag by IP until AUTH 
 app.get('/fur', function (req, res) {
 
     console.log(req.query.id);
@@ -44,6 +44,28 @@ app.get('/fur', function (req, res) {
         res.send(results);
     });
 
+})
+
+app.get("/role", function (req, res, next) {
+
+    console.log(req.query.id);
+
+    let roleID = req.query.id;
+    let query = "SELECT * FROM meat WHERE role = " + roleID + ' LIMIT 20';
+
+    //Adding Basic Checks
+    if (roleID < 0) {
+        res.send("ID is less than 0");
+    } else if (roleID > 4) {
+        res.send("ID is greater than 4");
+    } else {
+        con.query(query, function (err, results, feields) {
+            if (err) throw err;
+
+            console.log(results);
+            res.send(results);
+        })
+    }
 })
 
 http.createServer(app).listen(3015, () => {
