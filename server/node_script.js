@@ -68,6 +68,42 @@ app.get("/role", function (req, res, next) {
     }
 })
 
+// Add AUTH and limitor.
+app.get("/pudgy/head", function (req, res, next) {
+
+    let ID = req.query.id;
+    let Limit = req.query.limit;
+
+    //Make sure ID is not null or over over range;
+    if (ID == null) {
+        console.log("null id request sent");
+        res.send("ID requested is NULL!");
+    } else if (ID < 0) {
+        console.log("ID is requested is less than 0");
+        res.send("Requested ID less than 0");
+    } else if (ID > 50) {
+        console.log("ID is over range ... ");
+        res.send("Requested ID is over range")
+    } else {
+
+        //Allow up to 50 iteams. Default to 20;
+        if (Limit == null) {
+            Limit = 20;
+        } else if (Limit > 50) {
+            Limit = 20;
+        }
+
+        let query = "SELECT * FROM pudgy WHERE head = " + ID + ' LIMIT' + Limit;
+
+        con.query(query, function (err, results) {
+            if (err) throw err;
+
+            console.log(results);
+            res.send(results);
+        })
+    }
+})
+
 http.createServer(app).listen(3015, () => {
     console.log("started on port 3015: ");
 })
