@@ -7,6 +7,9 @@ import { FurKey } from "../data/koalaMetaDecoder";
 import { ListRole } from "../data/koalaMetaDecoder";
 import { RoleKey } from "../data/koalaMetaDecoder";
 
+import { ListHead } from "../data/pudgyMetaDecoder";
+import { HeadKey } from "../data/pudgyMetaDecoder";
+
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -22,7 +25,9 @@ import PudgyLogo from "../data/images/PudgyPenguinLogo.jpeg";
 import KIAlogo from "../data/images/KIAlogo.png";
 import SappyLogo from "../data/images/SappyLogo.jpeg";
 import BAYClogo from "../data/images/BAYClogo.png";
+
 import { queryAllByRole } from "@testing-library/dom";
+import { Collections } from "@mui/icons-material";
 
 const MockState = [
     {
@@ -66,14 +71,20 @@ export default function SerachBox() {
     const [open, setOpen] = useState(false);
     const [roleOpen, setRoleOpen] = useState(false);
 
+    const [headOpen, setHeadOpen] = useState(false);
+
     const [currentCollection, setCurrentCollection] = useState("Wallas");
 
-    const handleClick = () => {
+    const handleFurClick = () => {
         setOpen(!open);
     }
 
     const handleRoleClick = () => {
         setRoleOpen(!roleOpen);
+    }
+
+    const handleHeadClick = () => {
+        setHeadOpen(!headOpen);
     }
 
     function queryFur(id) {
@@ -94,6 +105,14 @@ export default function SerachBox() {
             })
     }
 
+    function queryHead(id) {
+        fetch("http://localhost:3015/pudgy/head?id = " + id)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+    }
+
     return (
         <>
             <h2>Choose Collection! </h2>
@@ -107,71 +126,120 @@ export default function SerachBox() {
 
             <h3>Recently Listed {currentCollection} </h3>
 
-            <div Style="border: 1px solid black">
-                <List
-                    sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-                    component="nav"
-                    aria-labelledby="nested-list-subheader"
-                    subheader={
-                        <ListSubheader component="div" id="nested-list-subheader">
-                            Select Walla Traits!
+            {currentCollection === "Wallas" &&
+                <>
+                    <div Style="border: 1px solid black">
+                        <List
+                            sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                            component="nav"
+                            aria-labelledby="nested-list-subheader"
+                            subheader={
+                                <ListSubheader component="div" id="nested-list-subheader">
+                                    Select Walla Traits!
                         </ListSubheader>
-                    }
-                >
-                    <ListItemButton onClick={handleClick}>
-                        <ListItemIcon>
-                            <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Fur" />
-                        {open ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
+                            }
+                        >
+                            <ListItemButton onClick={handleFurClick}>
+                                <ListItemIcon>
+                                    <DraftsIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Fur" />
+                                {open ? <ExpandLess /> : <ExpandMore />}
+                            </ListItemButton>
 
-                    <Collapse in={open}
-                        timeout="auto"
-                        collapsedSize="0px"
-                        unmountOnExit>
-                        <List component="div" disablePadding>
-                            {ListFur.map((furdata) =>
-                                <>
-                                    <ListItemButton sx={{ pl: 4 }} onClick={() => queryFur(furdata.id)}>
-                                        <ListItemIcon>
-                                            <StarBorder />
-                                        </ListItemIcon>
-                                        <ListItemText primary={furdata.text} />
-                                    </ListItemButton>
-                                </>
-                            )}
+                            <Collapse in={open}
+                                timeout="auto"
+                                collapsedSize="0px"
+                                unmountOnExit>
+                                <List component="div" disablePadding>
+                                    {ListFur.map((furdata) =>
+                                        <>
+                                            <ListItemButton sx={{ pl: 4 }} onClick={() => queryFur(furdata.id)}>
+                                                <ListItemIcon>
+                                                    <StarBorder />
+                                                </ListItemIcon>
+                                                <ListItemText primary={furdata.text} />
+                                            </ListItemButton>
+                                        </>
+                                    )}
+                                </List>
+                            </Collapse>
+
+                            <ListItemButton onClick={handleRoleClick}>
+                                <ListItemIcon>
+                                    <DraftsIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Role" />
+                                {open ? <ExpandLess /> : <ExpandMore />}
+                            </ListItemButton>
+
+                            <Collapse in={roleOpen}
+                                timeout="auto"
+                                collapsedSize="0px"
+                                unmountOnExit>
+                                <List component="div" disablePadding>
+                                    {ListRole.map((roledata) =>
+                                        <>
+                                            <ListItemButton sx={{ pl: 4 }} onClick={() => queryRole(roledata.id)}>
+                                                <ListItemIcon>
+                                                    <StarBorder />
+                                                </ListItemIcon>
+                                                <ListItemText primary={roledata.text} />
+                                            </ListItemButton>
+                                        </>
+                                    )}
+                                </List>
+                            </Collapse>
+
                         </List>
-                    </Collapse>
+                    </div>
+                </>
+            }
 
-                    <ListItemButton onClick={handleRoleClick}>
-                        <ListItemIcon>
-                            <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Role" />
-                        {open ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
 
-                    <Collapse in={roleOpen}
-                        timeout="auto"
-                        collapsedSize="0px"
-                        unmountOnExit>
-                        <List component="div" disablePadding>
-                            {ListRole.map((roledata) =>
-                                <>
-                                    <ListItemButton sx={{ pl: 4 }} onClick={() => queryRole(roledata.id)}>
-                                        <ListItemIcon>
-                                            <StarBorder />
-                                        </ListItemIcon>
-                                        <ListItemText primary={roledata.text} />
-                                    </ListItemButton>
-                                </>
-                            )}
+            {currentCollection === "Pudgys" &&
+                <>
+                    <div Style="border: 1px solid black">
+                        <List
+                            sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                            component="nav"
+                            aria-labelledby="nested-list-subheader"
+                            subheader={
+                                <ListSubheader component="div" id="nested-list-subheader">
+                                    Select Pudgy Traits!
+                        </ListSubheader>
+                            }
+                        >
+                            <ListItemButton onClick={handleHeadClick}>
+                                <ListItemIcon>
+                                    <DraftsIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Head" />
+                                {headOpen ? <ExpandLess /> : <ExpandMore />}
+                            </ListItemButton>
+
+                            <Collapse in={headOpen}
+                                timeout="auto"
+                                collapsedSize="0px"
+                                unmountOnExit>
+                                <List component="div" disablePadding>
+                                    {ListHead.map((data) =>
+                                        <>
+                                            <ListItemButton sx={{ pl: 4 }} onClick={() => queryHead(data.id)}>
+                                                <ListItemIcon>
+                                                    <StarBorder />
+                                                </ListItemIcon>
+                                                <ListItemText primary={data.text} />
+                                            </ListItemButton>
+                                        </>
+                                    )}
+                                </List>
+                            </Collapse>
                         </List>
-                    </Collapse>
+                    </div>
+                </>
+            }
 
-                </List>
-            </div>
 
             <br />
             <h2> Result </h2>
