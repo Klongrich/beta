@@ -43,13 +43,13 @@ export default function SearchBoxList({ data, Title }) {
                                 collapsedSize="0px"
                                 unmountOnExit>
                                 <List component="div" disablePadding>
-                                    {meta.allIteams.map((furdata) =>
+                                    {meta.allIteams.map((trait) =>
                                         <>
-                                            <ListItemButton sx={{ pl: 4 }} onClick={() => meta.query(furdata.id)}>
+                                            <ListItemButton sx={{ pl: 4 }} onClick={() => meta.query(trait.id)}>
                                                 <ListItemIcon>
                                                     <StarBorder />
                                                 </ListItemIcon>
-                                                <ListItemText primary={furdata.text} />
+                                                <ListItemText primary={trait.text} />
                                             </ListItemButton>
                                         </>
                                     )}
