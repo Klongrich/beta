@@ -10,24 +10,12 @@ import { RoleKey } from "../data/koalaMetaDecoder";
 import { ListHead } from "../data/pudgyMetaDecoder";
 import { HeadKey } from "../data/pudgyMetaDecoder";
 
-import ListSubheader from '@mui/material/ListSubheader';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
-
 import PudgyLogo from "../data/images/PudgyPenguinLogo.jpeg";
 import KIAlogo from "../data/images/KIAlogo.png";
 import SappyLogo from "../data/images/SappyLogo.jpeg";
 import BAYClogo from "../data/images/BAYClogo.png";
 
-import { queryAllByRole } from "@testing-library/dom";
-import { Collections } from "@mui/icons-material";
+import SearchBoxList from "../components/searchbox_list";
 
 const MockState = [
     {
@@ -68,7 +56,7 @@ const SelectBarBox = styled.div`
 export default function SerachBox() {
 
     const [searchMeta, setSearchMeta] = useState(MockState);
-    const [open, setOpen] = useState(false);
+    const [furOpen, setOpen] = useState(false);
     const [roleOpen, setRoleOpen] = useState(false);
 
     const [headOpen, setHeadOpen] = useState(false);
@@ -76,7 +64,7 @@ export default function SerachBox() {
     const [currentCollection, setCurrentCollection] = useState("Wallas");
 
     const handleFurClick = () => {
-        setOpen(!open);
+        setOpen(!furOpen);
     }
 
     const handleRoleClick = () => {
@@ -128,123 +116,44 @@ export default function SerachBox() {
 
             {currentCollection === "Wallas" &&
                 <>
-                    <div Style="border: 1px solid black">
-                        <List
-                            sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-                            component="nav"
-                            aria-labelledby="nested-list-subheader"
-                            subheader={
-                                <ListSubheader component="div" id="nested-list-subheader">
-                                    Select Walla Traits!
-                        </ListSubheader>
-                            }
-                        >
-                            <ListItemButton onClick={handleFurClick}>
-                                <ListItemIcon>
-                                    <DraftsIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Fur" />
-                                {open ? <ExpandLess /> : <ExpandMore />}
-                            </ListItemButton>
-
-                            <Collapse in={open}
-                                timeout="auto"
-                                collapsedSize="0px"
-                                unmountOnExit>
-                                <List component="div" disablePadding>
-                                    {ListFur.map((furdata) =>
-                                        <>
-                                            <ListItemButton sx={{ pl: 4 }} onClick={() => queryFur(furdata.id)}>
-                                                <ListItemIcon>
-                                                    <StarBorder />
-                                                </ListItemIcon>
-                                                <ListItemText primary={furdata.text} />
-                                            </ListItemButton>
-                                        </>
-                                    )}
-                                </List>
-                            </Collapse>
-
-                            <ListItemButton onClick={handleRoleClick}>
-                                <ListItemIcon>
-                                    <DraftsIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Role" />
-                                {open ? <ExpandLess /> : <ExpandMore />}
-                            </ListItemButton>
-
-                            <Collapse in={roleOpen}
-                                timeout="auto"
-                                collapsedSize="0px"
-                                unmountOnExit>
-                                <List component="div" disablePadding>
-                                    {ListRole.map((roledata) =>
-                                        <>
-                                            <ListItemButton sx={{ pl: 4 }} onClick={() => queryRole(roledata.id)}>
-                                                <ListItemIcon>
-                                                    <StarBorder />
-                                                </ListItemIcon>
-                                                <ListItemText primary={roledata.text} />
-                                            </ListItemButton>
-                                        </>
-                                    )}
-                                </List>
-                            </Collapse>
-
-                        </List>
-                    </div>
+                    <SearchBoxList data={[
+                        {
+                            toggle: handleFurClick,
+                            open: furOpen,
+                            primaryText: "Fur",
+                            query: queryFur,
+                            allIteams: ListFur
+                        },
+                        {
+                            toggle: handleRoleClick,
+                            open: roleOpen,
+                            primaryText: "Role",
+                            query: queryRole,
+                            allIteams: ListRole
+                        }
+                    ]} Title="Select Walla Traits" />
                 </>
             }
-
 
             {currentCollection === "Pudgys" &&
                 <>
-                    <div Style="border: 1px solid black">
-                        <List
-                            sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-                            component="nav"
-                            aria-labelledby="nested-list-subheader"
-                            subheader={
-                                <ListSubheader component="div" id="nested-list-subheader">
-                                    Select Pudgy Traits!
-                        </ListSubheader>
-                            }
-                        >
-                            <ListItemButton onClick={handleHeadClick}>
-                                <ListItemIcon>
-                                    <DraftsIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Head" />
-                                {headOpen ? <ExpandLess /> : <ExpandMore />}
-                            </ListItemButton>
-
-                            <Collapse in={headOpen}
-                                timeout="auto"
-                                collapsedSize="0px"
-                                unmountOnExit>
-                                <List component="div" disablePadding>
-                                    {ListHead.map((data) =>
-                                        <>
-                                            <ListItemButton sx={{ pl: 4 }} onClick={() => queryHead(data.id)}>
-                                                <ListItemIcon>
-                                                    <StarBorder />
-                                                </ListItemIcon>
-                                                <ListItemText primary={data.text} />
-                                            </ListItemButton>
-                                        </>
-                                    )}
-                                </List>
-                            </Collapse>
-                        </List>
-                    </div>
+                    <SearchBoxList data={[
+                        {
+                            toggle: handleHeadClick,
+                            open: headOpen,
+                            primaryText: "Head",
+                            query: queryHead,
+                            allIteams: ListHead,
+                        }
+                    ]} Title="Select Pudgy Traits" />
                 </>
             }
-
 
             <br />
             <h2> Result </h2>
             <br />
 
+            {/* Update to list all metas! */}
             {searchMeta.map(data =>
                 <>
                     <div Style="border: 1px solid black;
