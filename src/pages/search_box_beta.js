@@ -8,6 +8,7 @@ import { ListRole } from "../data/koalaMetaDecoder";
 import { RoleKey } from "../data/koalaMetaDecoder";
 
 import { ListHead } from "../data/pudgyMetaDecoder";
+import { ListBackground } from "../data/pudgyMetaDecoder";
 import { HeadKey } from "../data/pudgyMetaDecoder";
 
 import PudgyLogo from "../data/images/PudgyPenguinLogo.jpeg";
@@ -56,12 +57,13 @@ const SelectBarBox = styled.div`
 export default function SerachBox() {
 
     const [searchMeta, setSearchMeta] = useState(MockState);
+    const [currentCollection, setCurrentCollection] = useState("Wallas");
+
     const [furOpen, setOpen] = useState(false);
     const [roleOpen, setRoleOpen] = useState(false);
 
+    const [backgroundOpen, setBackgroundOpen] = useState(false);
     const [headOpen, setHeadOpen] = useState(false);
-
-    const [currentCollection, setCurrentCollection] = useState("Wallas");
 
     const handleFurClick = () => {
         setOpen(!furOpen);
@@ -73,6 +75,10 @@ export default function SerachBox() {
 
     const handleHeadClick = () => {
         setHeadOpen(!headOpen);
+    }
+
+    const handleBackgroundClick = () => {
+        setBackgroundOpen(!backgroundOpen);
     }
 
     function queryFur(id) {
@@ -90,6 +96,14 @@ export default function SerachBox() {
             .then(data => {
                 console.log(data);
                 setSearchMeta(data);
+            })
+    }
+
+    function queryBackground(id) {
+        fetch("http://localhost:3015/pudgy/background?id = " + id)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
             })
     }
 
@@ -138,6 +152,13 @@ export default function SerachBox() {
             {currentCollection === "Pudgys" &&
                 <>
                     <SearchBoxList data={[
+                        {
+                            toggle: handleBackgroundClick,
+                            open: backgroundOpen,
+                            primaryText: "Background",
+                            query: queryBackground,
+                            allIteams: ListBackground
+                        },
                         {
                             toggle: handleHeadClick,
                             open: headOpen,
